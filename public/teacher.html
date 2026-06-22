@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Teacher Feedback Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20260615-5">
+  </head>
+  <body data-page="teacher">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Teacher Dashboard</p>
+        <h1 id="sessionTitle">ห้องเรียนวันนี้</h1>
+      </div>
+      <div class="connection" id="connectionState">กำลังเชื่อมต่อ</div>
+    </header>
+
+    <main class="teacher-layout">
+      <section class="teacher-panel" aria-labelledby="teacherHeading">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">สำหรับอาจารย์</p>
+            <h2 id="teacherHeading">ภาพรวมความเข้าใจ</h2>
+          </div>
+          <div class="teacher-tools">
+            <a class="small-link" href="/student">Student view</a>
+            <button id="resetButton" class="danger-button" type="button">เริ่มรอบใหม่</button>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>ผู้ตอบล่าสุด</span>
+            <strong id="studentCount">0</strong>
+          </div>
+          <div class="metric ok-metric">
+            <span>OK</span>
+            <strong id="okCount">0</strong>
+          </div>
+          <div class="metric not-ok-metric">
+            <span>Not OK</span>
+            <strong id="notOkCount">0</strong>
+          </div>
+          <div class="metric pending-metric">
+            <span>คำถามรอตอบ</span>
+            <strong id="pendingCount">0</strong>
+          </div>
+        </div>
+
+        <div class="understanding-bar" aria-label="เปอร์เซ็นต์ OK">
+          <div id="okBar"></div>
+        </div>
+        <p id="okPercent" class="percent-copy">ยังไม่มีข้อมูล</p>
+
+        <div class="session-editor">
+          <input id="sessionInput" type="text" maxlength="80" placeholder="ชื่อหัวข้อวันนี้">
+          <button id="saveSessionButton" type="button">ตั้งชื่อ</button>
+        </div>
+
+
+
+        <div class="question-toolbar">
+          <button type="button" class="filter-button active" data-filter="all">ทั้งหมด</button>
+          <button type="button" class="filter-button" data-filter="pending">รอตอบ</button>
+          <button type="button" class="filter-button" data-filter="answered">ตอบแล้ว</button>
+        </div>
+
+        <div class="board-split">
+          <div>
+            <h3>คำถาม</h3>
+            <div id="questionsList" class="question-list empty">ยังไม่มีคำถาม</div>
+          </div>
+          <div>
+            <h3>สถานะล่าสุด</h3>
+            <div id="feedbackList" class="feedback-list empty">ยังไม่มีการกด OK/Not OK</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js?v=20260615-5"></script>
+  </body>
+</html>

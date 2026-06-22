@@ -1,0 +1,12 @@
+{
+  "name": "student-feedback-board-v2",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Student Feedback Board adapted for Vercel.",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

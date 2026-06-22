@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Feedback</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20260615-5">
+  </head>
+  <body data-page="student">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Student</p>
+        <h1 id="sessionTitle">ห้องเรียนวันนี้</h1>
+      </div>
+      <div class="connection" id="connectionState">กำลังเชื่อมต่อ</div>
+    </header>
+
+    <main class="single-layout">
+      <section class="student-panel" aria-labelledby="studentHeading">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">สำหรับนักศึกษา</p>
+            <h2 id="studentHeading">กดบอกอาจารย์ได้ทันที</h2>
+          </div>
+          <a class="small-link" href="/teacher">Teacher view</a>
+        </div>
+
+        <label class="name-field wide">
+          <span>ชื่อเล่น (ไม่บังคับ)</span>
+          <input id="aliasInput" type="text" maxlength="40" placeholder="เช่น A12 หรือไม่ใส่ก็ได้">
+        </label>
+
+        <div class="feedback-actions" role="group" aria-label="ส่งสถานะความเข้าใจ">
+          <button class="status-button ok" type="button" data-status="ok">
+            <span class="status-icon">✓</span>
+            <span>
+              <strong>OK</strong>
+              <small>เข้าใจ / ตามทัน</small>
+            </span>
+          </button>
+          <button class="status-button not-ok" type="button" data-status="not-ok">
+            <span class="status-icon">!</span>
+            <span>
+              <strong>Not OK</strong>
+              <small>ยังงง / ขออธิบายเพิ่ม</small>
+            </span>
+          </button>
+        </div>
+
+        <label class="note-field">
+          <span>หมายเหตุสั้น ๆ หลังจากกด OK/Not OK</span>
+          <input id="noteInput" type="text" maxlength="220" placeholder="เช่น งงตรงสูตร, ขอทวนอีกครั้ง">
+        </label>
+
+        <form id="questionForm" class="question-form">
+          <div class="form-title">
+            <h3>โพสต์คำถาม</h3>
+            <p>ถามแบบไม่ต้องพิมพ์ใน MS Teams และแนบรูปโจทย์/วงจร/หน้าจอได้</p>
+          </div>
+          <textarea id="questionText" maxlength="1200" rows="5" placeholder="พิมพ์คำถาม หรือเว้นว่างแล้วแนบรูปอย่างเดียวก็ได้"></textarea>
+          <div class="image-row">
+            <label class="file-button">
+              <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif">
+              <span>เลือกรูปภาพ</span>
+            </label>
+            <button id="clearImageButton" type="button" class="ghost-button">ล้างรูป</button>
+            <span id="imageName" class="image-name">ยังไม่ได้เลือกรูป</span>
+          </div>
+          <img id="imagePreview" class="image-preview" alt="ตัวอย่างรูปที่จะแนบ">
+          <button class="submit-button" type="submit">ส่งคำถาม</button>
+        </form>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js?v=20260615-5"></script>
+  </body>
+</html>
