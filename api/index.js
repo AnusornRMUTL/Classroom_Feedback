@@ -85,7 +85,12 @@ module.exports = async function (req, res) {
   }
 
   // Determine path
-  const pathname = req.url.split("?")[0];
+  const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
+  let pathname = url.pathname;
+  const reqPath = url.searchParams.get("reqPath");
+  if (reqPath) {
+    pathname = "/api/" + reqPath;
+  }
 
   if (req.method === "GET" && pathname === "/api/state") {
     sendJson(res, 200, publicState());
