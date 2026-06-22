@@ -140,7 +140,12 @@ function renderQuestions(questions) {
         </div>
         ${item.text ? `<div class="question-text">${escapeText(item.text)}</div>` : ""}
         ${image}
-        <button class="toggle-answer ${item.isAnswered ? "answered-button" : "pending-button"}" type="button" data-question-id="${item.id}">
+        <button class="toggle-answer ${item.isAnswered ? "answered-button" : "pending-button"}" type="button"
+          data-question-id="${item.id}"
+          data-question-is-answered="${item.isAnswered}"
+          data-question-alias="${escapeText(item.alias)}"
+          data-question-text="${escapeText(item.text || "")}"
+          data-question-created-at="${item.createdAt}">
           ${item.isAnswered ? "ตอบแล้ว" : "รอตอบ"}
         </button>
       </article>
@@ -292,7 +297,12 @@ function initTeacher() {
     const toggleButton = event.target.closest("[data-question-id]");
     if (toggleButton) {
       try {
-        await postJson(`/api/questions/${toggleButton.dataset.questionId}/toggle`, {});
+        await postJson(`/api/questions/${toggleButton.dataset.questionId}/toggle`, {
+          currentIsAnswered: toggleButton.dataset.questionIsAnswered === "true",
+          alias: toggleButton.dataset.questionAlias,
+          text: toggleButton.dataset.questionText,
+          createdAt: toggleButton.dataset.questionCreatedAt
+        });
       } catch (error) {
         showToast(`อัปเดตไม่สำเร็จ: ${error.message}`);
       }

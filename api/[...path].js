@@ -151,15 +151,28 @@ module.exports = async function (req, res) {
 
   if (req.method === "POST" && pathname.startsWith("/api/questions/") && pathname.endsWith("/toggle")) {
     const id = pathname.split("/")[3];
-    const question = state.questions.find((item) => item.id === id);
+    const body = req.body || {};
+    // Try to find existing question in state (same instance)
+    let question = state.questions.find((item) => item.id === id);
     if (!question) {
-      sendJson(res, 404, { error: "question not found" });
-      return;
+      // Question not in this instance's state (multi-instance scenario)
+      // Recreate a minimal question record from client-supplied data
+      const newIsAnswered = body.currentIsAnswered === true ? false : true;
+      question = {
+        id,
+        alias: cleanText(body.alias, 40) || "ไม่ระบุชื่อ",
+        text: cleanText(body.text, 1200),
+        image: null,
+        isAnswered: newIsAnswered,
+        answeredAt: newIsAnswered ? new Date().toISOString() : null,
+        createdAt: body.createdAt || new Date().toISOString()
+      };
+      state.questions.unshift(question);
+    } else {
+      question.isAnswered = !question.isAnswered;
+      question.answeredAt = question.isAnswered ? new Date().toISOString() : null;
     }
-    question.isAnswered = !question.isAnswered;
-    question.answeredAt = question.isAnswered ? new Date().toISOString() : null;
     state.updatedAt = new Date().toISOString();
-    
     sendJson(res, 200, { ok: true, question });
     return;
   }
