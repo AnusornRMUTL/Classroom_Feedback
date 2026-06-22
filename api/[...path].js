@@ -84,9 +84,12 @@ module.exports = async function (req, res) {
     return;
   }
 
-  // On Vercel rewrites, req.url preserves the original path (e.g. /api/state)
-  const pathname = req.url.split("?")[0];
-  console.log("[DEBUG] method:", req.method, "| req.url:", req.url, "| pathname:", pathname);
+  // Vercel may strip the /api prefix in catch-all routes — normalize it
+  let pathname = req.url.split("?")[0];
+  if (!pathname.startsWith("/api")) {
+    pathname = "/api" + pathname;
+  }
+  console.log("[DEBUG] method:", req.method, "| req.url:", req.url, "| normalized pathname:", pathname);
 
   if (req.method === "GET" && pathname === "/api/state") {
     sendJson(res, 200, publicState());
@@ -199,5 +202,5 @@ module.exports = async function (req, res) {
     return;
   }
 
-  sendJson(res, 404, { error: "api route not found" });
+  sendJson(res, 404, { error: "api route not found", pathname, method: req.method });
 };
