@@ -4,6 +4,6 @@
   "rewrites": [
     { "source": "/student", "destination": "/student.html" },
     { "source": "/teacher", "destination": "/teacher.html" },
-    { "source": "/api/(.*)", "destination": "/api/index.js?reqPath=$1" }
+    { "source": "/api/:path*", "destination": "/api/index.js" }
   ]
 }

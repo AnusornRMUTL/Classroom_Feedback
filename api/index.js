@@ -84,13 +84,9 @@ module.exports = async function (req, res) {
     return;
   }
 
-  // Determine path
-  const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
-  let pathname = url.pathname;
-  const reqPath = url.searchParams.get("reqPath");
-  if (reqPath) {
-    pathname = "/api/" + reqPath;
-  }
+  // On Vercel rewrites, req.url preserves the original path (e.g. /api/state)
+  const pathname = req.url.split("?")[0];
+  console.log("[DEBUG] method:", req.method, "| req.url:", req.url, "| pathname:", pathname);
 
   if (req.method === "GET" && pathname === "/api/state") {
     sendJson(res, 200, publicState());
