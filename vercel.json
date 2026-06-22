@@ -3,7 +3,6 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/student", "destination": "/student.html" },
-    { "source": "/teacher", "destination": "/teacher.html" },
-    { "source": "/api/:path*", "destination": "/api/index.js" }
+    { "source": "/teacher", "destination": "/teacher.html" }
   ]
 }
